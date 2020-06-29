@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        {% include "users/profile_header.html" with current_user=user %}
+        <div class="mb-4">
+            <a class="btn btn-warning" href="{% url 'password_change' %}">Change Password</a>
+            <a class="btn btn-info ml-2" href="{% url 'user-profile' user.username %}">Cancel</a>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile Settings</legend>
+                {{ u_form|crispy }}
+                {{ p_form }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,5 @@
+Django
+django-el-pagination
+django-cleanup
+django-crispy-forms
+Pillow
