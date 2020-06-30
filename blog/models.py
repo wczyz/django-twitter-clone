@@ -19,3 +19,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-date_posted']
+
+
+class Star(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)

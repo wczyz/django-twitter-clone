@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from el_pagination.views import AjaxListView
-from .models import Post
+from .models import Post, Star
 
 
 class PostListView(AjaxListView):
@@ -69,3 +70,14 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+
+def star(request):
+    if request.method == 'GET':
+        post_id = request.GET['post_id']
+        starred_post = Post.objects.get(id=post_id)
+        m = Star(post=starred_post)
+        m.save()
+        return HttpResponse('success')
+    else:
+        return HttpResponse('unsuccesful')
